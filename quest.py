@@ -676,6 +676,7 @@ class QuestGame(object):
 
         return chest
 
+    
     def blit_inventory(self, screenMode, speach=None):
         if screenMode != "game":
             xCounter, counter, OverCounter = 0, 0, 0
