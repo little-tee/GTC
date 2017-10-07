@@ -291,6 +291,38 @@ class QuestGame(object):
             
             self.entVel = (0, 0)
 
+    def deep_thought(self): # The 'AI' function, needs work
+        if self.counter2 % 75 == 0 or self.bypass == True:
+            self.bypass = False
+            if random.randint(0, 1) == 1:
+                self.entity.velocity[0], self.entity.velocity[1] = 0, 0
+            movement = random.choice(["self.entity.velocity[0] = -45; self.EntityDirection = 'left'; self.EntityDirection2 = 'left'",
+                                      "self.entity.velocity[0] = 45; self.EntityDirection = 'right'; self.EntityDirection2 = 'right'",
+                                      "self.entity.velocity[1] = -45; self.EntityDirection = 'up'; self.EntityDirection1 = 'up'",
+                                      "self.entity.velocity[1] = 45; self.EntityDirection = 'down'; self.EntityDirection1 = 'down'"])
+            exec(movement)
+            
+    def EntityAnimation(self, direction, number, character="hero"):
+        self.entVel = self.entity.velocity
+        
+        self.counter += 1
+        if self.EntityDirection1 == "still" and self.EntityDirection2 == "still":
+            if self.EntityDirection == "left":
+                self.entity = Entity('Tiles/' +character +'/walking_left/walking_left1.png')
+            if self.EntityDirection == "right":
+                self.entity = Entity('Tiles/' +character +'/walking_right/walking_right1.png')
+            if self.EntityDirection == "up":
+                self.entity = Entity('Tiles/' +character +'/walking_up/walking_up1.png')
+            if self.EntityDirection == "down":
+                self.entity = Entity('Tiles/' +character +'/walking_down/walking_down1.png')
+        else:
+            self.entity = Entity('Tiles/' +character +'/walking_' +direction +'/walking_' +direction +str(number) +'.png')
+        self.entity.velocity = self.entVel
+
+    def EntMoveBack(self):
+        #self.deep_thought(self, True) # Comment this to disable the 'AI'
+        pass
+
     def map_change(self, map, target=False): # Does what it says on the tin
             mapfile = get_map(map)
             print(mapfile)
@@ -676,7 +708,57 @@ class QuestGame(object):
 
         return chest
 
-    
+    def gen_enemy(self, player_stats, enemy_stat):
+        stats = attack_stats_types
+        stat = player_stats
+        for i in range(len(player_stats)):
+            j = stats[i]
+            try:
+                enemy_stat[stats[i]] = int((stat[j]-(stat[j]*0.2)) + random.randint(0, int(stat[j]*0.4)))
+            except TypeError:
+                enemy_stat[j] = choice(attack_types)
+        return enemy_stat
+        pass
+
+    def player_attack():
+        type = None
+        while type not in attack_types:
+            type = input("[ QUESTION ] Enter attack type. ")
+            if type not in attack_types:
+                print("[ ERROR    ] Attack type {} not found. Must be {}".format(type, attack_types))
+            else:
+                break
+        return type
+        pass
+
+    def attack(self, attacker_stats, defender_stats, player_attack_type):
+        fraction = attacker_stats['strength'] / defender_stats['blocking']
+        print("[ INFO     ] Defender attack type: {}".format(defender_stats['attack']))
+        if player_attack_type != defender_stats['attack']:
+            if fraction > (0.8 + (randint(0, 40)/100)):
+                attacker_stats['health'] -= int(fraction*10)
+                pass # Attacker Win
+            else:
+                defender_stats['health'] -= int(fraction*10)
+                pass # Attacker Loss
+        elif player_attack_type == attacker_stats['attack']: # Better odds here
+            if fraction > (0.9 + (randint(0, 40)/100)):
+                attacker_stats['health'] -= int(fraction*10)
+                pass # Attacker Win
+            else:
+                defender_stats['health'] -= int(fraction*10)
+                pass # Attacker Loss
+        else:
+            if fraction > (0.70 + (randint(0, 40)/100)): # Odds are worse here
+                attacker_stats['health'] -= int(fraction*10)
+                pass # Attacker Win
+            else:
+                defender_stats['health'] -= int(fraction*10)
+                pass # Attacker Loss
+        print("[ INFO     ] Attacker: {}  Defender: {}".format(attacker_stats['health'], defender_stats['health']))
+        print("[ INFO     ] Health to be lost: {}".format(int(fraction*10)))
+        return attacker_stats, defender_stats
+        
     def blit_inventory(self, screenMode, speach=None):
         if screenMode != "game":
             xCounter, counter, OverCounter = 0, 0, 0
@@ -688,6 +770,7 @@ class QuestGame(object):
         if screenMode == "inventory" or screenMode == "chest":
             dt = (clock.tick() / 500)
             clock.tick(self.fps)
+
             if len(inventory) > 0:
                 for i in range(0, len(inventory)):
                     OverCounter += 1
