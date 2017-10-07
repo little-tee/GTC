@@ -480,7 +480,19 @@ class QuestGame(object):
         self.group.center(self.hero.rect.center)
         # draw the map and all sprites
         self.group.draw(surface)
-        
+
+    def speach(self, dispWidth, dispHeight, text):
+##        text = "Laudem bonorum salutandi pri te, tollit melius delicata mel cu,\
+##                eu mea ullum legimus. Probo debitis te vel. Labores vulputate \
+##                argumentum sea id. Cibo vitae vocent eos no, ne odio molestiae\
+##                duo."
+        screen.blit(pygame.transform.scale(load_image(os.path.join(
+            "images", "gui", "speach.png")), (dispWidth, 150)), (0, dispHeight-150))
+        text = textwrap.wrap(text, width=95)
+        for i, line in enumerate(text): 
+            text_blit = pixel_font.render(line, False, pygame.Color('white'))
+            screen.blit(text_blit, (60, dispHeight-110 + 25*i))
+
     def map_generate(self, output, octaves, freq, x, y):
         command = "{}/lib/generate/__init__.py".format(os.getcwd())
         
