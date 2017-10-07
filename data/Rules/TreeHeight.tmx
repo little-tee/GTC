@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="trunk" tilewidth="32" tileheight="32" tilecount="18" columns="6">
+  <image source="../Tiles/trunk.png" width="192" height="96"/>
+ </tileset>
+ <tileset firstgid="19" name="treetop" tilewidth="32" tileheight="32" tilecount="42" columns="6">
+  <image source="../Tiles/treetop.png" width="192" height="224"/>
+ </tileset>
+ <tileset firstgid="61" name="dirt" tilewidth="32" tileheight="32" tilecount="18" columns="3">
+  <image source="../Tiles/dirt.png" width="96" height="192"/>
+ </tileset>
+ <layer name="Regions" width="10" height="10">
+  <data encoding="csv">
+71,71,71,0,0,0,0,0,0,0,
+71,71,71,0,0,0,0,0,0,0,
+71,71,71,0,0,0,0,0,0,0,
+71,71,71,0,0,0,0,0,0,0,
+71,71,71,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer name="Input_Main" width="10" height="10">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+1,2,3,0,0,0,0,0,0,0,
+7,8,9,0,0,0,0,0,0,0,
+13,14,15,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer name="Output_Foreground" width="10" height="10">
+  <data encoding="csv">
+22,23,24,0,0,0,0,0,0,0,
+28,29,30,0,0,0,0,0,0,0,
+34,35,36,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer name="Output1_Foreground" width="10" height="10">
+  <data encoding="csv">
+19,20,21,0,0,0,0,0,0,0,
+25,26,27,0,0,0,0,0,0,0,
+31,32,33,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+</map>

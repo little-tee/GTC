@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="117" height="1" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="grass_dirt" tilewidth="32" tileheight="32">
+  <image source="../../data/Tiles/grass_dirt.png" width="96" height="192"/>
+ </tileset>
+ <tileset firstgid="19" name="watergrass" tilewidth="32" tileheight="32">
+  <image source="../../data/Tiles/watergrass.png" width="96" height="192"/>
+ </tileset>
+ <tileset firstgid="37" name="sand_water" tilewidth="32" tileheight="32">
+  <image source="../../data/Tiles/sand_water.png" width="96" height="192"/>
+ </tileset>
+ <tileset firstgid="55" name="grass_sand" tilewidth="32" tileheight="32">
+  <image source="../../data/Tiles/grass_sand.png" width="96" height="192"/>
+ </tileset>
+ <layer name="Ground" width="117" height="1">
+  <data encoding="base64" compression="zlib">
+   eJzdwwVSAkAAAMADCaVDAQnBoFRaGBhCQv7/Jfcd7MwmQwgps96bNueDGfMWLFoyatw7E0aM+WzThnVbdmz74qtvvvvho09WrVm24pdjR347ce7MqQt/XLqyZ9+hn3YduPforwdP/nnx7NW1G7fuwu34B2HCCP8=
+  </data>
+ </layer>
+</map>

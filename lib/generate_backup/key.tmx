@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="117" height="1" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32" spacing="1" margin="1">
+  <image source="../../data/Tiles/desert.png" width="265" height="199"/>
+ </tileset>
+ <tileset firstgid="49" name="grass_dirt" tilewidth="32" tileheight="32">
+  <image source="../../data/Tiles/grass_dirt.png" width="96" height="192"/>
+ </tileset>
+ <tileset firstgid="67" name="watergrass" tilewidth="32" tileheight="32">
+  <image source="../../data/Tiles/watergrass.png" width="96" height="192"/>
+ </tileset>
+ <tileset firstgid="85" name="grass_cracked" tilewidth="32" tileheight="32">
+  <image source="../../data/Tiles/grass_cracked.png" width="96" height="192"/>
+ </tileset>
+ <tileset firstgid="103" name="cracks_cobbles" tilewidth="32" tileheight="32" spacing="1" margin="1">
+  <image source="../../data/Tiles/cracks_cobbles.png" width="265" height="199"/>
+ </tileset>
+ <tileset firstgid="151" name="sand_water" tilewidth="32" tileheight="32">
+  <image source="../../data/Tiles/sand_water.png" width="96" height="193"/>
+ </tileset>
+ <layer name="Ground" width="117" height="1">
+  <data encoding="base64" compression="zlib">
+   eJwNw0UzhAEAANCPPeGkDmLNqIM6aFZ3txWL1X4EBzmjDuqgO3+m92ZeQhAEiYZMMtkUU00z3SyzzTHfAgstsdQyM8w017B5FllsuRXW22CjEZtstsVW22y3w06rrLbWOiutccBBhxx2xFHHHHfCSaecttse++y3y14XXHTJuMuuuOqa62646ZYzzjpvzKhz7rrnvseeeOqFl1657Y4HHnrkmedee+OzL7765rsffvrltz/++ued9z765K0P/gMXKydT
+  </data>
+ </layer>
+</map>
