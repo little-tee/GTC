@@ -676,6 +676,7 @@ class QuestGame(object):
 
         return chest
 
+    
     def blit_inventory(self, screenMode, speach=None):
         if screenMode != "game":
             xCounter, counter, OverCounter = 0, 0, 0
@@ -687,7 +688,6 @@ class QuestGame(object):
         if screenMode == "inventory" or screenMode == "chest":
             dt = (clock.tick() / 500)
             clock.tick(self.fps)
-
             if len(inventory) > 0:
                 for i in range(0, len(inventory)):
                     OverCounter += 1
@@ -716,7 +716,8 @@ class QuestGame(object):
             picture = load_image(os.path.join("Tiles", "hero", "walking_down", "walking_down1.png"))
             picture = pygame.transform.scale(picture, (100, 100))
             rect = picture.get_rect()
-            screen.blit(picture, rect.move((guiX + 50, guiY + 28)))
+            rect = rect.move((guiX + 50, guiY + 28))
+            screen.blit(picture, rect)
             text = font.render("Player : Enemy", True, pygame.Color('black'))
             screen.blit(text, (guiX + 172, guiY + 45))
             text = "Health: "+str(attack_stats['health'])+"    Skill: "+str(attack_stats['skill'])+"    Attack: "+str(attack_stats['attack'])
