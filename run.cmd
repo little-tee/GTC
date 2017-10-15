@@ -1,1 +1,1 @@
-ffffPython35\python.exe quest.py
+Python35\python.exe quest.py
