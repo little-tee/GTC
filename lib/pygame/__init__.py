@@ -27,6 +27,14 @@ Windows, MacOS, OS X, BeOS, FreeBSD, IRIX, and Linux."""
 import sys
 import os
 
+try:
+    # add pygame folder to Windows and Python search paths
+    pgpath = os.path.abspath(os.path.dirname(__file__))
+    os.environ['PATH'] = ';'.join((pgpath, os.environ['PATH']))
+    sys.path.append(pgpath)
+except Exception:
+    pass
+
 # Choose Windows display driver
 if os.name == 'nt':
 
