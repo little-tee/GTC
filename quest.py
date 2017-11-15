@@ -27,6 +27,9 @@ from w_random import WeightedRandomizer
 import textwrap
 import subprocess
 from multiprocessing import Process
+import screeninfo
+import db_interface
+import sqlite3
 
 #Import pygame.
 import pygame
@@ -248,7 +251,7 @@ class QuestGame(object):
 
     def __init__(self, state): 
         if state == False:
-            screenMode = pygame.RESIZABLE
+            self.fullscreen = False
             # true while running.
             self.running = False
             self.clock = pygame.time.Clock()
@@ -325,7 +328,6 @@ class QuestGame(object):
 
     def map_change(self, map, target=False): # Does what it says on the tin
             mapfile = get_map(map)
-            print(mapfile)
             tmx_data = load_pygame(mapfile)
             self.tmx_data = tmx_data
             map_data = pyscroll.data.TiledMapData(tmx_data)
@@ -349,7 +351,6 @@ class QuestGame(object):
             self.map = stats['map'][:-4].lower()
             self.map = self.map.lstrip("m") # Fix that stupid bug that changes "maze1" to "ze1"
             self.map = self.map.lstrip("aps/")
-            print(tmx_data.width, tmx_data.height)
             
     def switcher(self): # Bunch of IF statements to decide if we're at a door or not, then changes the map.
         if len(objectX) == len(objectY) == len(targetPosX) == len(targetPosY) == len(currentMap) == \
@@ -361,7 +362,6 @@ class QuestGame(object):
                     if self.hero.position[0] - 15 <= int(objectX[i]) <= self.hero.position[0] + 15:
                         if self.hero.position[1] - 15 <= int(objectY[i]) <= self.hero.position[1] + 15:
                             if objectType[i] == "door":
-                                print("Door Found")
                                 used[i] = True
                                 self.map_change(targetMapFile[i])
                                 self.map = targetMap[i]
@@ -371,17 +371,13 @@ class QuestGame(object):
                                 self.hero.position = heroPos
                                 return False
                             elif objectType[i] == "chest":
-                                print("Chest Found")
                                 keyset, self.menu = "chest", "chest"                  
                                 if used[i] == False:
-                                    print("Unused")
                                     if chestContents[i] == None and used[i] == False:
                                         used[i] = True
                                         pickle.dump(used, open(os.path.join("data", "saves", "used.dat"), "wb"))
                                         chestContents[i] = self.genchests()
                                         pickle.dump(chestContents, open(os.path.join("data", "saves", "chestContents.dat"), "wb"))
-                                else:
-                                    print("Used")
                                 self.chestNo = i                    
                             return False
                         
@@ -602,7 +598,9 @@ class QuestGame(object):
                     pass
 
                 elif event.key == K_KP6:
-                    print("X :" +str(self.hero.position[0]) +", Y: " +str(self.hero.position[1]) +", Map: "+ self.map)
+                    print("X :" +str(int(self.hero.position[0])) +
+                          ", Y: " +str(int(self.hero.position[1])) +
+                          ", Map: "+ self.map)
                     pass
 
                 elif event.key == K_KP7:
@@ -613,10 +611,29 @@ class QuestGame(object):
                     sleep(0.5)
 
                 elif event.key == K_KP9:
-                    self.menu = "speach"
-                    pass
+                    editor = db_interface.Editor()
+                    conn = sqlite3.connect('data/saves/data.db')
+                    c = conn.cursor()
+
+                    for var in vars:
+                        exec("del "+var+"[:]")
+                        for data in c.execute("SELECT {} FROM csv".format(var)):
+                            data = str(data[0])
+                            exec("{}.append(\"{}\")".format(var, data))
+                            pass
 
                 elif event.key == K_F11:
+                    for m in screeninfo.get_monitors():
+                        displ = str(m)
+                        w, h, mx, c = displ.split(", ")
+                        
+                    if self.fullscreen:
+                        self.fullscreen = False
+                        screen = init_screen(1024, 700, pygame.HWSURFACE | pygame.FULLSCREEN )
+                    else:
+                        self.fullscreen = True
+                        screen = init_screen(w, h, pygame.HWSURFACE | pygame.RESIZABLE )
+
                     pygame.display.toggle_fullscreen()
 
             elif event.type == VIDEORESIZE:
@@ -939,7 +956,7 @@ if __name__ == "__main__":
     allVars = [objectX, objectY, targetPosY, targetPosX, targetMap, currentMap, animationDirection, targetMapFile]
     pygame.init()
     pygame.font.init()
-    screen = init_screen(1024, 700, pygame.RESIZABLE)
+    screen = init_screen(1024, 700, pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
     pygame.display.set_caption('Quest - An epic journey.')
     font = pygame.font.Font(os.path.join('data', 'GameFont.ttf'), 20)
     pixel_font = pygame.font.Font(os.path.join('data', 'PixelFont.ttf'), 24)
@@ -952,26 +969,26 @@ if __name__ == "__main__":
     taken = pickle.load(open(os.path.join("data", "saves", "chestContents.dat"), "rb"))
     vars = ["objectX", "objectY", "targetPosY", "targetPosX", "targetMap", "currentMap", "animationDirection", \
             "targetMapFile", "objectType"]
+    conn = sqlite3.connect('data/saves/data.db')
+    c = conn.cursor()
     for i in attack_stats_types:
         attack_stats[i] = stats[i]
     
-    for i in range(0, len(vars)):
-        with open ("data/saves/" +vars[i], "r") as myfile:
-            data = myfile.readlines()
-            splitList = data[0].split(", ")
-            #print(splitList)
-            for j in range(0, len(splitList)):
-                eval(vars[i]).append(splitList[j].rstrip())
+##    for i in range(0, len(vars)):
+##        with open ("data/saves/" +vars[i], "r") as myfile:
+##            data = myfile.readlines()
+##            splitList = data[0].split(", ")
+##            #print(splitList)
+##            for j in range(0, len(splitList)):
+##                eval(vars[i]).append(splitList[j].rstrip())
 
-##    listeerrr = []
-##    print(targetPosY)
-##    for i in targetPosY:
-##        try:
-##            listeerrr.append(int(i) + 458)
-##        except ValueError:
-##            listeerrr.append("chest")
-        
-##    print(listeerrr)
+    for var in vars:
+        for data in c.execute("SELECT {} FROM csv".format(var)):
+            data = str(data[0])
+            exec("{}.append(\"{}\")".format(var, data))
+
+    for var in vars:
+        eval("print({})".format(var))
                 
     try:
         game = QuestGame(False)
